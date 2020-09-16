@@ -41,7 +41,11 @@ public final class JsonPoweredTestHelper {
 
     public static List<File> getTestFiles(final String resourcePath) throws URISyntaxException {
         List<File> files = new ArrayList<File>();
-        addFilesFromDirectory(new File(JsonPoweredTestHelper.class.getResource(resourcePath).toURI()), files);
+        String localSpecDirectory = System.getProperty("org.mongodb.spec_dir");
+        File specDirectory = (localSpecDirectory == null) ?
+            new File(JsonPoweredTestHelper.class.getResource(resourcePath).toURI()) :
+            new File(localSpecDirectory);
+        addFilesFromDirectory(specDirectory, files);
         return files;
     }
 
